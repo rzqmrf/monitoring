@@ -197,7 +197,7 @@
         }
 
         .info-label {
-            font-size: 13px;
+            font-size: 20px;
             color: #6a11cb;
             font-weight: 600;
             margin-bottom: 3px;
@@ -211,7 +211,7 @@
         }
 
         .info-unit {
-                    font-size: 0.9rem;
+                    font-size: 1.4rem;
                     font-weight: 700;
                     color: #888;
         }
