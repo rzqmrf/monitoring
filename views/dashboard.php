@@ -6,7 +6,7 @@ if (!isset($_SESSION['user'])) {
     exit;
 }
 
-include "db.php";
+include "../routes/db.php";
 
 // Ambil data terakhir
 $latest = mysqli_query($conn, "SELECT * FROM sensor_data ORDER BY waktu DESC LIMIT 1");
@@ -24,7 +24,7 @@ $data = mysqli_query($conn, "SELECT * FROM sensor_data ORDER BY waktu DESC");
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Anta&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/dashboard.css">
+    <link rel="stylesheet" href="../assets/dashboard.css">
 </head>
 
 <body>
