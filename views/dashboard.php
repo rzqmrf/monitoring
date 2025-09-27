@@ -36,6 +36,7 @@ $data = mysqli_query($conn, "SELECT * FROM sensor_data ORDER BY waktu DESC");
             <div class="card card-info">
                 <h3>INFO TERKINI</h3>
                 <?php
+                
                 // Tentukan kelas warna berdasarkan persen (80-100 hijau, 40-79 kuning, 0-39 merah)
                 $persen_val = 0;
                 if (isset($last['persen_air']) && $last['persen_air'] !== null && $last['persen_air'] !== '') {
@@ -64,10 +65,11 @@ $data = mysqli_query($conn, "SELECT * FROM sensor_data ORDER BY waktu DESC");
                     </div>
                     <div class="info-card">
                         <div class="info-label">Estimasi Biaya</div>
-                        <div class="info-value">Rp <?= number_format($last['estimasi_biaya'], 0, ',', '.') ?></div>
+                        <div class="info-value">Rp <?= number_format($last['estimasi_biaya'], 2, ',', '.') ?></div>
                     </div>
                 </div>
             </div>
+            
             <!-- Grafik Kanan -->
             <div class="card card-graph">
                 <h3>GRAFIK PERSENTASE AIR</h3>
@@ -75,19 +77,21 @@ $data = mysqli_query($conn, "SELECT * FROM sensor_data ORDER BY waktu DESC");
                 <div style="margin-top:70px;text-align:center;">
                     <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:0 auto 8px auto;">
                         <ellipse cx="19" cy="28" rx="13" ry="7" fill="#6a11cb22" />
-                        <path d="M19 4C19 4 8 17.5 8 25C8 31 13.5 34 19 34C24.5 34 30 31 30 25C30 17.5 19 4 19 4Z" fill="#6a11cb" stroke="#2575fc" stroke-width="2" />
+                        <path d="M19 4C19 4 8 17.5 8 25C8 31 13.5 34 19 34C24.5 34 30 31 30 25C30 17.5 19 4 19 4Z" fill="#5915b3" stroke="#2575fc" stroke-width="2" />
                         <ellipse cx="19" cy="25" rx="7" ry="3" fill="#fff" fill-opacity=".5" />
                     </svg>
                     <div style="color:#6a11cb;font-weight:600;font-size:1.05rem;letter-spacing:0.5px;">
                         Pantau level air secara real-time dan pastikan toren selalu aman!
                     </div>
                     <?php
+                    
                     // Cek status monitoring aktif/tidak
                     $status = 'Tidak Aktif';
                     $statusColor = 'background:linear-gradient(90deg,#b91c1c 0%,#f87171 100%);';
                     if (!empty($last['waktu'])) {
                         $lastTime = strtotime($last['waktu']);
                         $now = time();
+                        
                         // Jika data terakhir kurang dari 1 menit dari waktu server, anggap aktif
                         if ($now - $lastTime < 60) {
                             $status = 'Aktif';
@@ -121,7 +125,7 @@ $data = mysqli_query($conn, "SELECT * FROM sensor_data ORDER BY waktu DESC");
                         echo '<td style="background:#f8fafc;color:#222;font-weight:600;">' . htmlspecialchars($row['tinggi_air']) . '</td>';
                         echo '<td style="background:#f8fafc;color:#222;font-weight:600;">' . htmlspecialchars($row['volume_air']) . '</td>';
                         echo '<td style="background:#f8fafc;color:#222;font-weight:600;">' . htmlspecialchars($row['persen_air']) . '%</td>';
-                        echo '<td style="background:#f8fafc;color:#222;font-weight:600;">Rp ' . number_format($row['estimasi_biaya'], 0, ',', '.') . '</td>';
+                        echo '<td style="background:#f8fafc;color:#222;font-weight:600;">Rp ' . number_format($row['estimasi_biaya'], 2, ',', '.') . '</td>';
                         $waktuFormat = date('d-m-Y H:i', strtotime($row['waktu']));
                         echo '<td style="background:#f8fafc;color:#222;">' . $waktuFormat . '</td>';
                         echo '</tr>';
@@ -164,10 +168,12 @@ $data = mysqli_query($conn, "SELECT * FROM sensor_data ORDER BY waktu DESC");
         const chartCanvas = document.getElementById('chart');
         if (chartCanvas && chartCanvas.getContext) {
             const ctx = chartCanvas.getContext('2d');
+            
             // Buat gradasi warna garis sesuai background
             let gradient = ctx.createLinearGradient(0, 0, chartCanvas.width, 0);
-            gradient.addColorStop(0, '#6a11cb');
+            gradient.addColorStop(0, '#5915b3');
             gradient.addColorStop(1, '#2575fc');
+            
             // Gradasi transparan untuk area bawah garis
             let fillGradient = ctx.createLinearGradient(0, 0, 0, chartCanvas.height);
             fillGradient.addColorStop(0, 'rgba(106,17,203,0.38)'); // #6a11cb lebih tebal
